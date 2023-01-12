@@ -5,14 +5,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="stlye.css">
+    <link rel="stylesheet" href="style.css">
     <title>Countdown APL</title>
 </head>
 
 <body>
-    <p id="countdownTimer"></p>
 
-    <form action="">
+    <p id="countdownTimer"></p>
+    <div class="topnav">
+        <a class="active" href="#einstellungen">Einstellungen</a>
+    </div>
+    <form onsubmit='return checkForm();'>
         <div>
             <label for="endDate">End-Datum</label>
             <input type="date" name="endDate" id="endDate">
@@ -22,6 +25,8 @@
             <label for="endTime">End-Datum</label>
             <input value="" type="time" name="endTime" id="endTime">
         </div>
+
+        <button id="submit">ok</button>
     </form>
     <p id="currentTime"></p>
     <p id="displayTime"></p>
@@ -31,6 +36,8 @@
         Minutes: <span class="minutes"></span><br>
         Seconds: <span class="seconds"></span>
     </div>
+
+
 
 
 
