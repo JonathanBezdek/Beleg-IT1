@@ -7,24 +7,22 @@ var minute = date.getMinutes();
 var second = date.getSeconds();
 var deadline;
 
-
-
 day = day < 10 ? "0" + day : day;
 month = month < 10 ? "0" + month : month;
 year = year < 10 ? "0" + year : year;
 
+//diese Funktion zeigt die aktuelle Zeit
 function updateCurrentTime() {
-    var date = new Date();
-    var hour = date.getHours();
-    var minute = date.getMinutes();
-    var second = date.getSeconds();
+    let date = new Date();
+    let hour = date.getHours();
+    let minute = date.getMinutes();
+    let second = date.getSeconds();
     hour = hour < 10 ? "0" + hour : hour;
     minute = minute < 10 ? "0" + minute : minute;
     second = second < 10 ? "0" + second : second;
 
     let current_time = hour + " : " + minute + " : " + second;
     document.getElementById("currentTime").innerHTML = current_time;
-    //console.log(deadline);
 }
 
 function setValues() {
@@ -42,7 +40,7 @@ function setValues() {
     tomorrowYear = tomorrowYear < 10 ? "0" + tomorrowYear : tomorrowYear;
 
     //Sonderfälle 22,23 und 24 Uhr     
-
+    //ab 00:00 beginnt der nächste Tag zu dem kann man nicht einfach inkrementieren da die Uhrzeit geresettet wird
     switch (hour) {
         case 22:
             displayTime = "00:00";
@@ -62,21 +60,27 @@ function setValues() {
 
     }
 
+    //hier wird dem Element die Voreinstellung übergeben
     document.getElementById("endTime").value = displayTime;
     document.getElementById("endDate").value = displayDate;
+    let countdownEndTime = "Ende: " + displayTime;
+    document.getElementById("countdownEndTime").innerHTML = countdownEndTime;
+
+
 }
 
-
+//diese Funktion wird getriggeret wenn die Form submittet wird 
 function checkForm() {
-    //const deadline = new Date(endFormat);
 
     let endDate = document.getElementById('endDate').value;
-    console.log(endDate);
+    //console.log(endDate);
     let endTime = document.getElementById('endTime').value;
-    console.log(endTime);
+    //console.log(endTime);
 
-    let endFormat = endDate + "T" + endTime + "Z"; //conversion in ISO date (YYYY-MM-DDTHH:MM:SSZ) 
+    //Konvertierung in ein ISO Datum (YYYY-MM-DDTHH:MM:SSZ)
+    let endFormat = endDate + "T" + endTime + "Z";
 
+    //die deadline wird initizialisiert und in die richtige Zeitzone umgerechnet 
     deadline = new Date(endFormat);
     deadline.setTime(deadline.getTime() + deadline.getTimezoneOffset() * 60 * 1000);
 
@@ -90,27 +94,26 @@ function getTimeRemaining(endtime) {
 
     var total = Date.parse(endtime) - Date.parse(new Date());
     total = total + 60000; //offset für die letzte minute 
-    console.log(total);
-    //const seconds = Math.floor((total / 1000) % 60);
+    //console.log(total);
+
     var hours = Math.floor((total / 3600000));
-    console.log(hours);
+    //console.log(hours);
     var minutes = Math.floor(((total) / 1000 / 60) % 60);
-    console.log(minutes);
+    //console.log(minutes);
     return {
         total,
-        //days,
         hours,
         minutes
-        //seconds
     };
 }
 
 function initializeClock(id, endtime) {
+    //für den fall, dass eine neue deadline gewählt wird
     if (endtime != deadline) {
         return;
     }
-    const clock = document.getElementById(id);
 
+    const clock = document.getElementById(id);
     const hoursSpan = clock.querySelector('.hours');
     const minutesSpan = clock.querySelector('.minutes');
 
@@ -123,16 +126,19 @@ function initializeClock(id, endtime) {
 
         var t = getTimeRemaining(endtime);
 
+        //für den Übergang zwischen: Stunde > 0 und Stunde < 0 
         switch (t.hours) {
-            case 0:
+            case 0: //wenn Stunde < 0, dann wird sie nicht angezeigt 
                 hoursSpan.innerHTML = "";
                 minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
                 break;
             default:
+                //wenn Stunde = 0 und die Minuten gleich 0 dann wird nur 60min angezeigt 
                 if (t.minutes == 0 && t.hours == 1) {
                     hoursSpan.innerHTML = "";
                     minutesSpan.innerHTML = "60";
                 } else {
+                    //wenn Stunde > 0 
                     hoursSpan.innerHTML = t.hours + "h";
                     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
                 }
@@ -148,10 +154,27 @@ function initializeClock(id, endtime) {
     const timeinterval = setInterval(updateClock, 1000);
 }
 
-//const deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
+
 
 setValues();
 setInterval(updateCurrentTime, 1000);
+
+
+
+//sidebar
+/* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
+function openNav() {
+    document.getElementById("mySidebar").style.width = "250px";
+    document.getElementById("main").style.marginLeft = "250px";
+}
+
+/* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
+function closeNav() {
+    document.getElementById("mySidebar").style.width = "0";
+    document.getElementById("main").style.marginLeft = "0";
+}
+
+
 
 
 
