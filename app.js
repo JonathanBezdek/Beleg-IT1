@@ -8,19 +8,23 @@ var second = date.getSeconds();
 var deadline;
 
 
-hour = hour < 10 ? "0" + hour : hour;
-minute = minute < 10 ? "0" + minute : minute;
-second = second < 10 ? "0" + second : second;
 
 day = day < 10 ? "0" + day : day;
 month = month < 10 ? "0" + month : month;
 year = year < 10 ? "0" + year : year;
 
 function updateCurrentTime() {
+    var date = new Date();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+    hour = hour < 10 ? "0" + hour : hour;
+    minute = minute < 10 ? "0" + minute : minute;
+    second = second < 10 ? "0" + second : second;
 
     let current_time = hour + " : " + minute + " : " + second;
     document.getElementById("currentTime").innerHTML = current_time;
-    console.log(deadline);
+    //console.log(deadline);
 }
 
 function setValues() {
@@ -65,6 +69,7 @@ function setValues() {
 
 function checkForm() {
     //const deadline = new Date(endFormat);
+
     let endDate = document.getElementById('endDate').value;
     console.log(endDate);
     let endTime = document.getElementById('endTime').value;
@@ -73,43 +78,66 @@ function checkForm() {
     let endFormat = endDate + "T" + endTime + "Z"; //conversion in ISO date (YYYY-MM-DDTHH:MM:SSZ) 
 
     deadline = new Date(endFormat);
-    console.log(deadline);
+    deadline.setTime(deadline.getTime() + deadline.getTimezoneOffset() * 60 * 1000);
+
+    initializeClock('clockdiv', deadline);
     return false;
 }
 
 function getTimeRemaining(endtime) {
-    
-    const total = Date.parse(endtime) - Date.parse(new Date());
-    const seconds = Math.floor((total / 1000) % 60);
-    const minutes = Math.floor((total / 1000 / 60) % 60);
-    const hours = Math.floor((total / (1000 * 60 * 60)) % 24);
-    const days = Math.floor(total / (1000 * 60 * 60 * 24));
-    //console.log(total);
 
+    console.log(endtime);
+
+    var total = Date.parse(endtime) - Date.parse(new Date());
+    total = total + 60000; //offset für die letzte minute 
+    console.log(total);
+    //const seconds = Math.floor((total / 1000) % 60);
+    var hours = Math.floor((total / 3600000));
+    console.log(hours);
+    var minutes = Math.floor(((total) / 1000 / 60) % 60);
+    console.log(minutes);
     return {
         total,
-        days,
+        //days,
         hours,
-        minutes,
-        seconds
+        minutes
+        //seconds
     };
 }
 
 function initializeClock(id, endtime) {
-    
+    if (endtime != deadline) {
+        return;
+    }
     const clock = document.getElementById(id);
-    const daysSpan = clock.querySelector('.days');
+
     const hoursSpan = clock.querySelector('.hours');
     const minutesSpan = clock.querySelector('.minutes');
-    const secondsSpan = clock.querySelector('.seconds');
+
 
     function updateClock() {
-        const t = getTimeRemaining(endtime);
 
-        daysSpan.innerHTML = t.days;
-        hoursSpan.innerHTML = ('0' + t.hours).slice(-2);
-        minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
-        secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+        if (endtime != deadline) {
+            return;
+        }
+
+        var t = getTimeRemaining(endtime);
+
+        switch (t.hours) {
+            case 0:
+                hoursSpan.innerHTML = "";
+                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                break;
+            default:
+                if (t.minutes == 0 && t.hours == 1) {
+                    hoursSpan.innerHTML = "";
+                    minutesSpan.innerHTML = "60";
+                } else {
+                    hoursSpan.innerHTML = t.hours + "h";
+                    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                }
+
+        }
 
         if (t.total <= 0) {
             clearInterval(timeinterval);
@@ -121,11 +149,10 @@ function initializeClock(id, endtime) {
 }
 
 //const deadline = new Date(Date.parse(new Date()) + 15 * 24 * 60 * 60 * 1000);
+
 setValues();
-checkForm();
-initializeClock('clockdiv', deadline);
-updateCurrentTime();
-//setInterval(updateCurrentTime, 4000);
+setInterval(updateCurrentTime, 1000);
+
 
 
 
