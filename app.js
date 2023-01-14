@@ -5,7 +5,9 @@ var year = date.getFullYear();
 var hour = date.getHours();
 var minute = date.getMinutes();
 var second = date.getSeconds();
-var deadline;
+var deadline
+var initial = 0;
+var i = 0;
 
 day = day < 10 ? "0" + day : day;
 month = month < 10 ? "0" + month : month;
@@ -88,26 +90,41 @@ function checkForm() {
 
 function getTimeRemaining(endtime) {
 
-    console.log(endtime);
+    //console.log(endtime);
+
+
 
     var total = Date.parse(endtime) - Date.parse(new Date());
-    total = total + 60000; //offset für die letzte minute 
+    //offset für die letzte minute 
     console.log(total);
 
+    i = i + 1;
+    console.log("I:" + i);
+    if (i <= 1) {
+        initial = total;
+        console.log("initial:" + initial);
+    }
+    total = total + 60000;
     var hours = Math.floor((total / 3600000));
     //console.log(hours);
     var minutes = Math.floor(((total) / 1000 / 60) % 60);
     //console.log(minutes);
+
+
+
     return {
         total,
         hours,
-        minutes
+        minutes,
+        initial
     };
 }
 
 function initializeClock(id, endtime) {
+
     //für den fall, dass eine neue deadline gewählt wird
     if (endtime != deadline) {
+        i = 0;
         return;
     }
 
@@ -119,10 +136,28 @@ function initializeClock(id, endtime) {
     function updateClock() {
 
         if (endtime != deadline) {
+            i = 0;
+            console.log("NEUNEUNEUNEU");
+            clearInterval(timeinterval);
             return;
         }
 
         var t = getTimeRemaining(endtime);
+
+        //update progresbar 
+        // var progressPercent = 100 - ((((t.total - 60000) / (initial)) * 100)) + "%";
+
+        // die schon vergangene zeti /  zeit die vergehen muss 
+        console.log("t.total:   " + (t.total));
+        console.log("initial:   " + initial);
+        var progressPercent = (initial - t.total + 60000);
+        console.log("diff:  " + progressPercent);
+        progressPercent = (progressPercent / initial) * 100;
+        progressPercent = progressPercent.toFixed(0) + "%";
+        console.log("%: " + progressPercent);
+
+        document.getElementById("percent").innerHTML = progressPercent;
+        document.getElementById("progressbar").style.width = progressPercent;
 
         //für den Übergang zwischen: Stunde > 0 und Stunde < 0 
         switch (t.hours) {
@@ -163,11 +198,13 @@ setInterval(updateCurrentTime, 1000);
 
 
 
-//sidebar
+//topbar
 function menuToggle() {
     var nav = document.getElementById("nav")
     var toggle = document.getElementById("toggle")
     nav.classList.toggle("active")
     toggle.classList.toggle("active")
 }
+
+//progressbar
 
