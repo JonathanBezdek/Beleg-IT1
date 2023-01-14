@@ -3,10 +3,10 @@
     margin: 0;
     box-sizing: border-box;
     font-family: 'Veranda', sans-serif;
-    /*
- width: 100%;
+
+    width: 100%;
     height: auto;
-*/
+
 }
 
 body {
@@ -42,6 +42,11 @@ body {
 
 }
 
+.submit {
+    padding: 12px 12px;
+    width: 10%;
+}
+
 .submit:hover {
     background: #283048;
     /* fallback for old browsers */
@@ -61,10 +66,7 @@ body {
     padding: 0px 0px 40px
 }
 
-#submit {
-    margin-left: 10px;
-    padding: 3px 6px;
-}
+
 
 .label {
     font-size: 15px;
@@ -72,6 +74,7 @@ body {
     color: lightgray;
     height: 20px;
     display: inline;
+    width: 15%;
 }
 
 .fullPageMenu.active {
