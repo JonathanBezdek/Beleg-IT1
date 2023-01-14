@@ -13,6 +13,10 @@ day = day < 10 ? "0" + day : day;
 month = month < 10 ? "0" + month : month;
 year = year < 10 ? "0" + year : year;
 
+hour = hour < 10 ? "0" + hour : hour;
+minute = minute < 10 ? "0" + minute : minute;
+second = second < 10 ? "0" + second : second;
+
 //diese Funktion zeigt die aktuelle Zeit
 function updateCurrentTime() {
     let date = new Date();
@@ -57,13 +61,18 @@ function setValues() {
             displayDate = tomorrowYear + "-" + tomorrowMonth + "-" + tomorrowDay;
             break;
         default:
-            displayTime = hour + 2 + ":00";
+        
+            if (hour == '00') {
+                hour = '0';
+            }
+            displayTime = (hour + 2) + ":00";
             displayDate = year + "-" + month + "-" + day;
 
     }
 
     //hier wird dem Element die Voreinstellung übergeben
     document.getElementById("endTime").value = displayTime;
+    console.log("displayTime: " + displayTime);
     document.getElementById("endDate").value = displayDate;
 
 }
@@ -96,13 +105,13 @@ function getTimeRemaining(endtime) {
 
     var total = Date.parse(endtime) - Date.parse(new Date());
     //offset für die letzte minute 
-    console.log(total);
+    //console.log(total);
 
     i = i + 1;
-    console.log("I:" + i);
+    //console.log("I:" + i);
     if (i <= 1) {
         initial = total;
-        console.log("initial:" + initial);
+        // console.log("initial:" + initial);
     }
     total = total + 60000;
     var hours = Math.floor((total / 3600000));
@@ -137,7 +146,6 @@ function initializeClock(id, endtime) {
 
         if (endtime != deadline) {
             i = 0;
-            console.log("NEUNEUNEUNEU");
             clearInterval(timeinterval);
             return;
         }
@@ -148,13 +156,13 @@ function initializeClock(id, endtime) {
         // var progressPercent = 100 - ((((t.total - 60000) / (initial)) * 100)) + "%";
 
         // die schon vergangene zeti /  zeit die vergehen muss 
-        console.log("t.total:   " + (t.total));
-        console.log("initial:   " + initial);
+        //  console.log("t.total:   " + (t.total));
+        // console.log("initial:   " + initial);
         var progressPercent = (initial - t.total + 60000);
-        console.log("diff:  " + progressPercent);
+        //console.log("diff:  " + progressPercent);
         progressPercent = (progressPercent / initial) * 100;
         progressPercent = progressPercent.toFixed(0) + "%";
-        console.log("%: " + progressPercent);
+        // console.log("%: " + progressPercent);
 
         document.getElementById("percent").innerHTML = progressPercent;
         document.getElementById("progressbar").style.width = progressPercent;
