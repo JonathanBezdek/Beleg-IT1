@@ -92,7 +92,7 @@ function getTimeRemaining(endtime) {
 
     var total = Date.parse(endtime) - Date.parse(new Date());
     total = total + 60000; //offset für die letzte minute 
-    //console.log(total);
+    console.log(total);
 
     var hours = Math.floor((total / 3600000));
     //console.log(hours);
@@ -127,24 +127,28 @@ function initializeClock(id, endtime) {
         //für den Übergang zwischen: Stunde > 0 und Stunde < 0 
         switch (t.hours) {
             case 0: //wenn Stunde < 0, dann wird sie nicht angezeigt 
-                hoursSpan.innerHTML = "";
-                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                hoursSpan.innerHTML = "noch";
+                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2) + "min";
+                //console.log(t.total);
                 break;
             default:
                 //wenn Stunde = 0 und die Minuten gleich 0 dann wird nur 60min angezeigt 
                 if (t.minutes == 0 && t.hours == 1) {
-                    hoursSpan.innerHTML = "";
-                    minutesSpan.innerHTML = "60";
+                    hoursSpan.innerHTML = "noch";
+                    minutesSpan.innerHTML = "60min";
                 } else {
                     //wenn Stunde > 0 
-                    hoursSpan.innerHTML = t.hours + "h";
-                    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                    hoursSpan.innerHTML = "noch " + t.hours + "h";
+                    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2) + "min";
                 }
 
         }
 
-        if (t.total <= 0) {
+        if (t.total <= 60000) {
+            hoursSpan.innerHTML = '';
+            minutesSpan.innerHTML = 'Zeit abgelaufen';
             clearInterval(timeinterval);
+
         }
     }
 

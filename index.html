@@ -14,22 +14,20 @@
 
 
         <div class="nav">
-            <ul>
-                <p class="textTopbar">Einstellungen</p>
-                <form onsubmit='return checkForm();'>
-                    <div>
-                        <label for="endDate">End-Datum</label>
-                        <input type="date" name="endDate" id="endDate">
-                    </div>
-                    <br>
-                    <div>
-                        <label for="endTime">End-Datum</label>
-                        <input value="" type="time" name="endTime" id="endTime">
-                    </div>
 
-                    <button id="submit">ok</button>
-                </form>
-            </ul>
+            <form onsubmit='return checkForm();'>
+                <span>Einstellungen</span>
+                <div>
+                    <label class="label" for="endDate">End-Datum</label>
+                    <input type="date" name="endDate" id="endDate">
+                </div>
+                <br>
+
+                <label class="label" for="endTime">End-Datum</label>
+                <input value="" type="time" name="endTime" id="endTime">
+
+                <button id="submit">ok</button>
+            </form>
         </div>
     </div>
     <span class="menuicon" id="toggle" onclick="menuToggle()"></span>
@@ -41,8 +39,8 @@
     <div class="timeleft">
         <p id="countdownEndTime"></p>
         <div id="clockdiv">
-            noch <span class="hours"> </span>
-            <span class="minutes"></span> min<br>
+            <span class="hours"> </span>
+            <span class="minutes"></span> <br>
         </div>
     </div>
 
