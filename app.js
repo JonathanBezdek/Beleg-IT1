@@ -63,9 +63,6 @@ function setValues() {
     //hier wird dem Element die Voreinstellung übergeben
     document.getElementById("endTime").value = displayTime;
     document.getElementById("endDate").value = displayDate;
-    let countdownEndTime = "Ende: " + displayTime;
-    document.getElementById("countdownEndTime").innerHTML = countdownEndTime;
-
 
 }
 
@@ -83,7 +80,8 @@ function checkForm() {
     //die deadline wird initizialisiert und in die richtige Zeitzone umgerechnet 
     deadline = new Date(endFormat);
     deadline.setTime(deadline.getTime() + deadline.getTimezoneOffset() * 60 * 1000);
-
+    let countdownEndTime = "Ende: " + endTime;
+    document.getElementById("countdownEndTime").innerHTML = countdownEndTime;
     initializeClock('clockdiv', deadline);
     return false;
 }
@@ -162,20 +160,10 @@ setInterval(updateCurrentTime, 1000);
 
 
 //sidebar
-/* Set the width of the sidebar to 250px and the left margin of the page content to 250px */
-function openNav() {
-    document.getElementById("mySidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
+function menuToggle() {
+    var nav = document.getElementById("nav")
+    var toggle = document.getElementById("toggle")
+    nav.classList.toggle("active")
+    toggle.classList.toggle("active")
 }
-
-/* Set the width of the sidebar to 0 and the left margin of the page content to 0 */
-function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-}
-
-
-
-
-
 
