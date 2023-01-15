@@ -16,17 +16,22 @@
         <div class="nav">
 
             <form onsubmit='return checkForm();'>
-                <span>Einstellungen</span>
-                <div>
+                <div class="settings">Einstellungen</div>
+                <br>
+                <div class="settings">
                     <label class="label" for="endDate">End-Datum</label>
                     <input class="label" type="date" name="endDate" id="endDate">
                 </div>
                 <br>
+                <div class="settings">
+                    <label class="label" for="endTime">End-Uhrzeit<Datum></label>
+                    <input class="label" type="time" name="endTime" id="endTime">
+                    <br>
+                </div>
+                <div class="settings">
+                    <button class="submit" id="submit">ok</button>
+                </div>
 
-                <label class="label" for="endTime">End-Uhrzeit<Datum></label>
-                <input class="label" type="time" name="endTime" id="endTime">
-
-                <button class="submit" id="submit">ok</button>
             </form>
         </div>
     </div>

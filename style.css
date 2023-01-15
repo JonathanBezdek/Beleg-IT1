@@ -10,20 +10,21 @@
 }
 
 body {
-
+    background-color: #fefae0;
     min-height: 100vh;
 
 }
 
 .time {
-    font-size: 150px;
+    color: #283618;
+    font-size: 15vw;
     text-align: center;
 }
 
 .timeleft {
-    font-size: 70px;
+    font-size: 6vw;
     text-align: center;
-    color: lightgray;
+    color: #606c38;
 }
 
 .fullPageMenu {
@@ -35,30 +36,26 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.7);
-
-    opacity: 1.0;
+    background-color: rgb(40, 54, 24, 0.9);
     transition: 0.5s;
 
 }
 
 .submit {
-    padding: 12px 12px;
     width: 10%;
+
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
 }
 
 .submit:hover {
-    background: #283048;
-    /* fallback for old browsers */
-    background: -webkit-linear-gradient(to right, #859398, #283048);
-    /* Chrome 10-25, Safari 5.1-6 */
-    background: linear-gradient(to right, #859398, #283048);
-    /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-
+    background: #dda15e;
 }
 
 .fullPageMenu .nav span {
-    font-size: 30px;
+    font-size: 30vw;
     text-align: center;
     color: lightgray;
     height: 40px;
@@ -67,19 +64,28 @@ body {
 }
 
 
-
-.label {
-    font-size: 15px;
+.fullPageMenu .settings {
+    margin-right: 50%;
+    font-size: 3vw;
     text-align: center;
     color: lightgray;
-    height: 20px;
-    display: inline;
+}
+
+.label:hover {
+    color: #dda15e;
+}
+
+.label {
+
+    font-size: 2vw;
+    text-align: center;
+    color: lightgray;
+    height: 10%;
     width: 15%;
 }
 
 .fullPageMenu.active {
     top: -100%;
-
 }
 
 /*
@@ -116,16 +122,15 @@ body {
     right: 20px;
     width: 60px;
     height: 60px;
-    background: #fff url(https://i.postimg.cc/k4rb3zpp/pngwave.png);
+    background: url(/close.png);
     background-size: 40px;
     cursor: pointer;
     background-repeat: no-repeat;
     background-position: 10px;
-
 }
 
 .menuicon.active {
-    background: #fff url(https://i.postimg.cc/25t1dMY5/pngegg-1.png);
+    background: #fefae0 url(/settings.png);
     background-size: 40px;
     background-repeat: no-repeat;
     background-position: 10px;
@@ -202,16 +207,17 @@ body {
 
 
 b {
-    font-size: 30px;
-    padding-left: 10px;
+    font-size: 2vw;
+    color: #fefae0;
 }
 
 
 
 .bar {
-    background: linear-gradient(90deg, rgba(0, 255, 59, 1) 0%, rgba(255, 214, 0, 1) 50%, rgba(255, 0, 0, 1) 100%);
+    background: #dda15e;
     transition: 1s ease-in-out;
     border-radius: 15px 30px 30px 15px;
+    border-color: #283618;
     color: white;
     text-align: left;
     border: 5px solid rgb(52, 52, 52);

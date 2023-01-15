@@ -61,7 +61,7 @@ function setValues() {
             displayDate = tomorrowYear + "-" + tomorrowMonth + "-" + tomorrowDay;
             break;
         default:
-        
+
             if (hour == '00') {
                 hour = '0';
             }
@@ -72,8 +72,11 @@ function setValues() {
 
     //hier wird dem Element die Voreinstellung übergeben
     document.getElementById("endTime").value = displayTime;
-    console.log("displayTime: " + displayTime);
+    // console.log("displayTime: " + displayTime);
     document.getElementById("endDate").value = displayDate;
+
+
+    document.getElementById("progressbar").style.display = "none";
 
 }
 
@@ -93,7 +96,11 @@ function checkForm() {
     deadline.setTime(deadline.getTime() + deadline.getTimezoneOffset() * 60 * 1000);
     let countdownEndTime = "Ende: " + endTime;
     document.getElementById("countdownEndTime").innerHTML = countdownEndTime;
+
     initializeClock('clockdiv', deadline);
+    document.getElementById("progressbar").style.display = "block";
+
+
     return false;
 }
 
@@ -134,6 +141,7 @@ function initializeClock(id, endtime) {
     //für den fall, dass eine neue deadline gewählt wird
     if (endtime != deadline) {
         i = 0;
+        //console.log("NEUNEUNEUNEU");
         return;
     }
 
@@ -161,17 +169,33 @@ function initializeClock(id, endtime) {
         var progressPercent = (initial - t.total + 60000);
         //console.log("diff:  " + progressPercent);
         progressPercent = (progressPercent / initial) * 100;
-        progressPercent = progressPercent.toFixed(0) + "%";
-        // console.log("%: " + progressPercent);
 
+        // console.log("initial: " + initial);
+        // console.log("t.total" + t.total);
+        //  console.log("%: " + progressPercent);
+        if (progressPercent <= 25) {
+            document.getElementById("progressbar").style.background = "linear-gradient(90deg, rgba(0,128,0,1) 0%, rgba(117,186,0,1) 100%";
+
+        } else if (progressPercent <= 50) {
+            document.getElementById("progressbar").style.background = "linear-gradient(90deg, rgba(0,128,0,1) 0%, rgba(117,186,0,1) 50%, rgba(255,255,0,1) 100%)";
+
+        } else if (progressPercent <= 75) {
+            document.getElementById("progressbar").style.background = "linear-gradient(90deg, rgba(0,128,0,1) 0%, rgba(117,186,0,1) 33%, rgba(255,255,0,1) 66%, rgba(255,143,0,1) 100%)";
+
+        } else {
+            document.getElementById("progressbar").style.background = "linear-gradient(90deg, rgba(0,128,0,1) 0%, rgba(117,186,0,1) 25%, rgba(255,255,0,1) 50%, rgba(255,143,0,1) 75%, rgba(255,0,0,1) 100%)";
+        }
+
+        progressPercent = progressPercent.toFixed(0) + "%";
         document.getElementById("percent").innerHTML = progressPercent;
         document.getElementById("progressbar").style.width = progressPercent;
 
+
         //für den Übergang zwischen: Stunde > 0 und Stunde < 0 
         switch (t.hours) {
-            case 0: //wenn Stunde < 0, dann wird sie nicht angezeigt 
+            case 0: //wenn Stunde < 0, dann wird sie nicht angezeigt und die Minuten ohne führende 0
                 hoursSpan.innerHTML = "noch";
-                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2) + "min";
+                minutesSpan.innerHTML = t.minutes + "min";
                 //console.log(t.total);
                 break;
             default:
@@ -190,7 +214,9 @@ function initializeClock(id, endtime) {
         if (t.total <= 60000) {
             hoursSpan.innerHTML = '';
             minutesSpan.innerHTML = 'Zeit abgelaufen';
+            i = 0;
             clearInterval(timeinterval);
+            return;
 
         }
     }
