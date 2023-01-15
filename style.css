@@ -25,6 +25,11 @@ body {
     font-size: 6vw;
     text-align: center;
     color: #606c38;
+
+}
+
+.blink span {
+    animation: blinker 1s linear infinite;
 }
 
 .fullPageMenu {
@@ -222,4 +227,11 @@ b {
     text-align: left;
     border: 5px solid rgb(52, 52, 52);
     width: 0%;
+}
+
+
+@keyframes blinker {
+    50% {
+        color: rgb(255, 0, 55);
+    }
 }
