@@ -69,11 +69,13 @@ function setValues() {
             displayDate = year + "-" + month + "-" + day;
 
     }
-
+    localStorage.setItem("localDate", displayDate);
+    localStorage.setItem("localTime", displayTime);
     //hier wird dem Element die Voreinstellung übergeben
     document.getElementById("endTime").value = displayTime;
     // console.log("displayTime: " + displayTime);
     document.getElementById("endDate").value = displayDate;
+
 
 
     document.getElementById("progressbar").style.display = "none";
@@ -137,7 +139,7 @@ function getTimeRemaining(endtime) {
 }
 
 function initializeClock(id, endtime) {
-
+    timeOver.innerHTML = '';
     //für den fall, dass eine neue deadline gewählt wird
     if (endtime != deadline) {
         i = 0;
@@ -154,6 +156,11 @@ function initializeClock(id, endtime) {
 
         if (endtime != deadline) {
             i = 0;
+            /*
+            document.getElementById("clockH").style.animation = "blinker 1s linear infinite";
+            document.getElementById("clockT").style.animation = "blinker 1s linear infinite";
+            */
+
             clearInterval(timeinterval);
             return;
         }
@@ -208,13 +215,31 @@ function initializeClock(id, endtime) {
                     hoursSpan.innerHTML = "noch " + t.hours + "h";
                     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2) + "min";
                 }
+        }
 
+        switch (t.minutes) {
+            case 15:
+                setBlinking();
+                break;
+            case 30:
+                setBlinking();
+                break;
+            case 45:
+                setBlinking();
+                break;
+            case 00:
+                setBlinking();
+                break;
+            default
         }
 
         if (t.total <= 60000) {
             hoursSpan.innerHTML = '';
-            minutesSpan.innerHTML = 'Zeit abgelaufen';
+            minutesSpan.innerHTML = '';
+            timeOver.innerHTML = 'Zeit abgelaufen';
             i = 0;
+            setBlinking();
+
             clearInterval(timeinterval);
             return;
 
@@ -240,5 +265,12 @@ function menuToggle() {
     toggle.classList.toggle("active")
 }
 
-//progressbar
+//blinking
 
+var blinkingMinutes = document.getElementById("timeOver");
+timeOver.className = "";
+
+function setBlinking() {
+    var blinkingMinutes = document.getElementById("timeOver");
+    timeOver.className = "blinking";
+}
