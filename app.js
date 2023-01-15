@@ -1,3 +1,11 @@
+/*
+Name: Jonathan Bezdek
+S-Nummer: s82104
+Studiengruppe: 20/042/62 
+Studiengang: Wirtschaftsinformatik
+*/
+
+
 var date = new Date();
 var day = date.getDate();
 var month = date.getMonth() + 1;
@@ -61,42 +69,41 @@ function setValues() {
             displayDate = tomorrowYear + "-" + tomorrowMonth + "-" + tomorrowDay;
             break;
         default:
-
+            //führende Null entfernen 
             if (hour == '00') {
                 hour = '0';
             }
             displayTime = (hour + 2) + ":00";
             displayDate = year + "-" + month + "-" + day;
-
     }
+
+    /*
     localStorage.setItem("localDate", displayDate);
     localStorage.setItem("localTime", displayTime);
+    */
+
     //hier wird dem Element die Voreinstellung übergeben
     document.getElementById("endTime").value = displayTime;
-    // console.log("displayTime: " + displayTime);
     document.getElementById("endDate").value = displayDate;
-
-
-
     document.getElementById("progressbar").style.display = "none";
 
 }
 
-//diese Funktion wird getriggeret wenn die Form submittet wird 
+//diese Funktion wird getriggered wenn die Form submittet wird 
 function checkForm() {
+
+    //blinking wird zurückgesetzt wenn ein neuer End Wert gewählt wird
     var blinkingOver = document.getElementById("timeOver");
     timeOver.className = "";
-
     var blinkingEndTime = document.getElementById("clockH");
     clockH.className = "hours";
-
     var blinkingEndTime = document.getElementById("clockM");
     clockM.className = "minutes";
 
     let endDate = document.getElementById('endDate').value;
-    //console.log(endDate);
+
     let endTime = document.getElementById('endTime').value;
-    //console.log(endTime);
+
 
     //Konvertierung in ein ISO Datum (YYYY-MM-DDTHH:MM:SSZ)
     let endFormat = endDate + "T" + endTime + "Z";
@@ -110,33 +117,25 @@ function checkForm() {
     initializeClock('clockdiv', deadline);
     document.getElementById("progressbar").style.display = "block";
 
-
     return false;
 }
 
 function getTimeRemaining(endtime) {
 
-    //console.log(endtime);
-
-
-
     var total = Date.parse(endtime) - Date.parse(new Date());
-    //offset für die letzte minute 
-    //console.log(total);
 
+    //hier verhindert, dass sich der initiale Wert verändert um den korrekten Prozentsatz berechnen 
     i = i + 1;
-    //console.log("I:" + i);
     if (i <= 1) {
         initial = total;
-        // console.log("initial:" + initial);
     }
+
+    //offset für die letzte minute 
     total = total + 60000;
+
+    //verbleibende Millisekunden werden in Stunden und Minuten umgerechnet
     var hours = Math.floor((total / 3600000));
-    //console.log(hours);
     var minutes = Math.floor(((total) / 1000 / 60) % 60);
-    //console.log(minutes);
-
-
 
     return {
         total,
@@ -147,11 +146,12 @@ function getTimeRemaining(endtime) {
 }
 
 function initializeClock(id, endtime) {
+
     timeOver.innerHTML = '';
+
     //für den fall, dass eine neue deadline gewählt wird
     if (endtime != deadline) {
         i = 0;
-        //console.log("NEUNEUNEUNEU");
         return;
     }
 
@@ -170,19 +170,11 @@ function initializeClock(id, endtime) {
 
         var t = getTimeRemaining(endtime);
 
-        //update progresbar 
-        // var progressPercent = 100 - ((((t.total - 60000) / (initial)) * 100)) + "%";
-
-        // die schon vergangene zeti /  zeit die vergehen muss 
-        //  console.log("t.total:   " + (t.total));
-        // console.log("initial:   " + initial);
+        //Prozentsatz der bereits verstrichenen Zeit wird berechnet
         var progressPercent = (initial - t.total + 60000);
-        //console.log("diff:  " + progressPercent);
         progressPercent = (progressPercent / initial) * 100;
 
-        // console.log("initial: " + initial);
-        // console.log("t.total" + t.total);
-        //  console.log("%: " + progressPercent);
+        //die Bar erhält Stufenweise ein anderes Styling
         if (progressPercent <= 25) {
             document.getElementById("progressbar").style.background = "linear-gradient(90deg, rgba(0,128,0,1) 0%, rgba(117,186,0,1) 100%";
 
@@ -196,7 +188,9 @@ function initializeClock(id, endtime) {
             document.getElementById("progressbar").style.background = "linear-gradient(90deg, rgba(0,128,0,1) 0%, rgba(117,186,0,1) 25%, rgba(255,255,0,1) 50%, rgba(255,143,0,1) 75%, rgba(255,0,0,1) 100%)";
         }
 
+        //der Prozentsatz wird gerundet auf 0 Nachkommastellen
         progressPercent = progressPercent.toFixed(0) + "%";
+
         document.getElementById("percent").innerHTML = progressPercent;
         document.getElementById("progressbar").style.width = progressPercent;
 
@@ -206,7 +200,6 @@ function initializeClock(id, endtime) {
             case 0: //wenn Stunde < 0, dann wird sie nicht angezeigt und die Minuten ohne führende 0
                 hoursSpan.innerHTML = "noch";
                 minutesSpan.innerHTML = t.minutes + "min";
-                //console.log(t.total);
                 break;
             default:
                 //wenn Stunde = 0 und die Minuten gleich 0 dann wird nur 60min angezeigt 
@@ -219,31 +212,28 @@ function initializeClock(id, endtime) {
                     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2) + "min";
                 }
         }
-        // console.log(t.minutes);
+
         switch (t.minutes) {
             case 15:
-                console.log("in 15");
                 setBlinking();
                 break;
             case 30:
-                console.log("in 30");
                 setBlinking();
                 break;
             case 45:
-                console.log("in 45");
                 setBlinking();
                 break;
             case 0:
                 setBlinking();
                 break;
             default:
+                //Blinken der letzten 10,5 und 1 Minuten
                 if (t.minutes == 10 && t.hours == '') {
                     setBlinking();
                 }
                 if (t.minutes == 5 && t.hours == '') {
                     setBlinking();
                 }
-
                 if (t.minutes == 1 && t.hours == '') {
                     setBlinking();
                 }
@@ -255,10 +245,8 @@ function initializeClock(id, endtime) {
             timeOver.innerHTML = 'Zeit abgelaufen';
             i = 0;
             setBlinking();
-
             clearInterval(timeinterval);
             return;
-
         }
     }
 
@@ -266,12 +254,8 @@ function initializeClock(id, endtime) {
     const timeinterval = setInterval(updateClock, 1000);
 }
 
-
-
 setValues();
 setInterval(updateCurrentTime, 1000);
-
-
 
 //topbar
 function menuToggle() {
@@ -282,7 +266,6 @@ function menuToggle() {
 }
 
 //blinking
-
 var blinkingOver = document.getElementById("timeOver");
 timeOver.className = "";
 
@@ -301,5 +284,4 @@ function setBlinking() {
 
     var blinkingEndTime = document.getElementById("clockM");
     clockM.className = "minutes blinking";
-
 }

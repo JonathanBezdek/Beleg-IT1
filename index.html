@@ -1,20 +1,24 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="author" content="
+                                Name: Jonathan Bezdek
+                                S-Nummer: s82104
+                                Studiengruppe: 20/042/62 
+                                Studiengang: Wirtschaftsinformatik">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
     <title>Countdown APL s82104</title>
+
 </head>
 
 <body>
     <div class="fullPageMenu" id="nav">
-
-
         <div class="nav">
-
             <form onsubmit='return checkForm();'>
                 <div class="settings">Einstellungen</div>
                 <br>
@@ -31,19 +35,18 @@
                 <div class="settings">
                     <button class="submit" id="submit">ok</button>
                 </div>
-
             </form>
         </div>
     </div>
-    <span class="menuicon" id="toggle" onclick="menuToggle()"></span>
 
+    <span class="menuicon" id="toggle" onclick="menuToggle()"></span>
 
     <div class="time">
         <p id="currentTime"></p>
     </div>
 
-    <div id="progressbar" class="bar"><b id="percent"></b></div>
-
+    <div id="progressbar" class="bar">
+        <b id="percent"></b>
     </div>
 
     <div class="timeleft">
@@ -54,10 +57,6 @@
             <span id="timeOver"></span> <br>
         </div>
     </div>
-
-
-
-
 
 </body>
 <script src="app.js"></script>
