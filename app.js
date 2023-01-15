@@ -92,7 +92,7 @@ function setValues() {
 //diese Funktion wird getriggered wenn die Form submittet wird 
 function checkForm() {
 
-    //blinking wird zurückgesetzt wenn ein neuer End Wert gewählt wird
+    //blinking wird zurückgesetzt wenn ein neuer End-Wert gewählt wird
     var blinkingOver = document.getElementById("timeOver");
     timeOver.className = "";
     var blinkingEndTime = document.getElementById("clockH");
@@ -108,7 +108,7 @@ function checkForm() {
     //Konvertierung in ein ISO Datum (YYYY-MM-DDTHH:MM:SSZ)
     let endFormat = endDate + "T" + endTime + "Z";
 
-    //die deadline wird initizialisiert und in die richtige Zeitzone umgerechnet 
+    //die deadline wird initialisiert und in die richtige Zeitzone umgerechnet 
     deadline = new Date(endFormat);
     deadline.setTime(deadline.getTime() + deadline.getTimezoneOffset() * 60 * 1000);
     let countdownEndTime = "Ende: " + endTime;
@@ -149,7 +149,7 @@ function initializeClock(id, endtime) {
 
     timeOver.innerHTML = '';
 
-    //für den fall, dass eine neue deadline gewählt wird
+    //für den Fall, dass eine neue deadline gewählt wird
     if (endtime != deadline) {
         i = 0;
         return;
