@@ -84,6 +84,14 @@ function setValues() {
 
 //diese Funktion wird getriggeret wenn die Form submittet wird 
 function checkForm() {
+    var blinkingOver = document.getElementById("timeOver");
+    timeOver.className = "";
+
+    var blinkingEndTime = document.getElementById("clockH");
+    clockH.className = "hours";
+
+    var blinkingEndTime = document.getElementById("clockM");
+    clockM.className = "minutes";
 
     let endDate = document.getElementById('endDate').value;
     //console.log(endDate);
@@ -156,11 +164,6 @@ function initializeClock(id, endtime) {
 
         if (endtime != deadline) {
             i = 0;
-            /*
-            document.getElementById("clockH").style.animation = "blinker 1s linear infinite";
-            document.getElementById("clockT").style.animation = "blinker 1s linear infinite";
-            */
-
             clearInterval(timeinterval);
             return;
         }
@@ -216,21 +219,34 @@ function initializeClock(id, endtime) {
                     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2) + "min";
                 }
         }
-
+        // console.log(t.minutes);
         switch (t.minutes) {
             case 15:
+                console.log("in 15");
                 setBlinking();
                 break;
             case 30:
+                console.log("in 30");
                 setBlinking();
                 break;
             case 45:
+                console.log("in 45");
                 setBlinking();
                 break;
-            case 00:
+            case 0:
                 setBlinking();
                 break;
-            default
+            default:
+                if (t.minutes == 10 && t.hours == '') {
+                    setBlinking();
+                }
+                if (t.minutes == 5 && t.hours == '') {
+                    setBlinking();
+                }
+
+                if (t.minutes == 1 && t.hours == '') {
+                    setBlinking();
+                }
         }
 
         if (t.total <= 60000) {
@@ -267,10 +283,23 @@ function menuToggle() {
 
 //blinking
 
-var blinkingMinutes = document.getElementById("timeOver");
+var blinkingOver = document.getElementById("timeOver");
 timeOver.className = "";
 
+var blinkingEndTime = document.getElementById("clockH");
+clockH.className = "hours";
+
+var blinkingEndTime = document.getElementById("clockM");
+clockM.className = "minutes";
+
 function setBlinking() {
-    var blinkingMinutes = document.getElementById("timeOver");
+    var blinkingOver = document.getElementById("timeOver");
     timeOver.className = "blinking";
+
+    var blinkingEndTime = document.getElementById("clockH");
+    clockH.className = "hours blinking";
+
+    var blinkingEndTime = document.getElementById("clockM");
+    clockM.className = "minutes blinking";
+
 }
